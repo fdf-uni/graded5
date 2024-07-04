@@ -174,7 +174,12 @@ ui <- fluidPage(
       p(
         "If you are interested in how this app works, you can check out it's
         source code on",
-        a(href = "https://github.com/fdf-uni/graded5", "GitHub"),
+        a(
+ 	  "GitHub",
+	  href = "https://github.com/fdf-uni/graded5",
+	  target = "_blank",
+	  rel = "noopener noreferrer"
+	),
         "."
       ),
     )
@@ -343,6 +348,7 @@ server <- function(input, output, session) {
         style = "fontweight:600"
       ),
       target = "_blank",
+      rel = "noopener noreferrer",
       href = paste0(
         "https://x.com/intent/tweet?",
         "url=https%3A%2F%2Ffdf-uni.github.io%2Fgraded5%2F",
