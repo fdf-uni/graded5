@@ -1,5 +1,5 @@
 # Exercise Sheet 5
-# Authors: github.com/fdf-uni
+# Author: github.com/fdf-uni
 
 # For this GitHub version I removed some comments here which aren't too
 # important for the below code and rather just answers to exercises
@@ -70,8 +70,14 @@ ui <- fluidPage(
   fluidRow(
     column(4, textInput("nameInput", "What's your name?")),
     column(
-      8, textOutput("nameOutput"),
+      6, textOutput("nameOutput"),
       tags$head(tags$style("#nameOutput{font-size: 20px; font-style: bold;}"))
+    ),
+    # 3) Button to generate new data
+    column(
+      2,
+      align = "right",
+      actionButton("newDataButton", "New Data", icon = icon("dice-five"))
     )
   ),
   # Create Panel with different tabsets
@@ -175,11 +181,11 @@ ui <- fluidPage(
         "If you are interested in how this app works, you can check out it's
         source code on",
         a(
- 	  "GitHub",
-	  href = "https://github.com/fdf-uni/graded5",
-	  target = "_blank",
-	  rel = "noopener noreferrer"
-	),
+          "GitHub",
+          href = "https://github.com/fdf-uni/graded5",
+          target = "_blank",
+          rel = "noopener noreferrer"
+        ),
         "."
       ),
     )
@@ -360,6 +366,14 @@ server <- function(input, output, session) {
         "+How+good+are+you%3F%0A"
       )
     )
+  })
+
+  # 3) Generate new random data whenever the corresponding button is pressed
+  observeEvent(input$newDataButton, {
+    values$df <- generate_correlated_data(
+      correlation = runif(1, -1, 1), n = 100
+    )
+    update_data_table()
   })
 }
 
