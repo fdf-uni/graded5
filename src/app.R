@@ -131,7 +131,7 @@ ui <- fluidPage(
         width = "100%"
       ),
       numericInput(
-        "numberOfObservations", "Number of observations", 100,
+        "numberOfObservations", "Number of observations", 100, min = 1, step = 1
       )
     ),
 
@@ -329,10 +329,13 @@ server <- function(input, output, session) {
   # sandbox tabset. Note that since df was turned into a reactive variable this
   # can be done in a very short manner as only df needs to be updated.
   observeEvent(input$correlationRange | input$numberOfObservations, {
-    values$df <- generate_correlated_data(
-      correlation = input$correlationRange,
-      n = input$numberOfObservations
-    )
+    # Check that number of observations is reasonable
+    if (input$numberOfObservations >= 1) {
+      values$df <- generate_correlated_data(
+        correlation = input$correlationRange,
+        n = input$numberOfObservations
+      )
+    }
     # 3) Also update the data view
     update_data_table()
   })
